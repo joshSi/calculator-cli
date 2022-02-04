@@ -1,12 +1,17 @@
 #ifndef STACK_H
 #define STACK_H
 
-template<typename T>
+template <typename T>
 class Stack
 {
 public:
-	void push(T elem);
-	int top();
+	Stack();
+	Stack(const Stack& s);
+	Stack& operator= (const Stack& other);
+	~Stack();
+
+	void push(const T& elem);
+	T top();
 	void pop();
 	bool empty();
 	bool clear();
