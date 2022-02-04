@@ -18,8 +18,8 @@ public:
 private:
 	struct Node {
 		T val;
-		Node* next = nullptr;
 		Node* prev = nullptr;
+		Node* next = nullptr;
 	};
 
 	Node* m_top = nullptr;
