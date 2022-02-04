@@ -14,15 +14,15 @@ public:
 	T top();
 	void pop();
 	bool empty();
-	bool clear();
+	void clear();
 private:
 	struct Node {
 		T val;
-		Node* next;
+		Node* next = nullptr;
+		Node* prev = nullptr;
 	};
 
 	Node* m_top = nullptr;
-	Node* m_fst = nullptr;
 };
 
 #endif
