@@ -11,8 +11,12 @@ public:
 	~Stack();
 
 	void push(const T& elem);
+
+	// Assumes not empty, otherwise undefined behavior
 	T top();
+	// Assumes not empty, otherwise undefined behavior
 	void pop();
+
 	bool empty();
 	void clear();
 private:

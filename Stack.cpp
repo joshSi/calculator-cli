@@ -1,12 +1,13 @@
 #include "Stack.h"
+#include <string>
+#include <exception>
+#include <iostream>
 
 template <class T>
 Stack<T>::Stack() {}
 
 template <class T>
-Stack<T>::Stack(const Stack<T>& s) {
-
-}
+Stack<T>::Stack(const Stack<T>& s) {}
 
 template <class T>
 Stack<T>& Stack<T>::operator= (const Stack<T>& other) {
@@ -51,15 +52,11 @@ void Stack<T>::push(const T& elem) {
 
 template <class T>
 T Stack<T>::top() {
-	if (m_top == nullptr)
-		throw "Calling top() on empty Stack";
 	return m_top->val;
 }
 
 template <class T>
 void Stack<T>::pop() {
-	if (m_top == nullptr)
-		throw "Calling pop() on empty Stack";
 	Node* prevptr = m_top->prev;
 	delete m_top;
 	m_top = prevptr;
@@ -83,3 +80,7 @@ void Stack<T>::clear() {
 }
 
 template class Stack<int>;
+template class Stack<double>;
+template class Stack<float>;
+template class Stack<char>;
+template class Stack<std::string>;
