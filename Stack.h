@@ -7,7 +7,7 @@ class Stack
 public:
 	Stack();
 	Stack(const Stack& s);
-	Stack& operator= (const Stack& other);
+	Stack& operator= (const Stack& s);
 	~Stack();
 
 	void push(const T& elem);
