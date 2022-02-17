@@ -139,7 +139,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Parser.h" />
     <ClInclude Include="Stack.h" />
+    <ClInclude Include="Trie.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test.cpp" />

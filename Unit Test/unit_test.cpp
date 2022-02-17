@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "CppUnitTest.h"
-#include "../Stack.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -11,7 +10,7 @@ namespace UnitTest
 	public:
 		TEST_METHOD(IntStack)
 		{
-			Logger::WriteMessage("Test stack<int>");
+			Logger::WriteMessage("Test Stack<int>\n");
 			Stack<int> t_stack;
 			Assert::IsTrue(t_stack.empty());
 
@@ -31,14 +30,26 @@ namespace UnitTest
 				t_stack.push(list[i]);
 			}
 			Assert::IsFalse(t_stack.empty());
+			Stack<int> p_stack = t_stack;
+			for (int i = 9; i >= 0; i--) {
+				Assert::AreEqual(p_stack.top(), list[i]);
+				p_stack.pop();
+			}
+			p_stack = t_stack;
+			Assert::IsFalse(p_stack.empty());
+			for (int i = 9; i >= 0; i--) {
+				Assert::AreEqual(p_stack.top(), list[i]);
+				p_stack.pop();
+			}
+			Assert::IsTrue(p_stack.empty());
 			t_stack.clear();
 			Assert::IsTrue(t_stack.empty());
-			Logger::WriteMessage("All test passed");
+			Logger::WriteMessage("Stack<int> tests passed");
 		}
 
 		TEST_METHOD(StringStack)
 		{
-			Logger::WriteMessage("Test stack<string>");
+			Logger::WriteMessage("Test Stack<string>\n");
 			Stack<std::string> t_stack;
 			Assert::IsTrue(t_stack.empty());
 
@@ -63,7 +74,56 @@ namespace UnitTest
 			Assert::IsFalse(t_stack.empty());
 			t_stack.clear();
 			Assert::IsTrue(t_stack.empty());
-			Logger::WriteMessage("All test passed");
+			Logger::WriteMessage("Stack<string> tests passed");
+		}
+	};
+	TEST_CLASS(TrieTest)
+	{
+	public:
+		TEST_METHOD(FloatTrie)
+		{
+			Logger::WriteMessage("Test TrieNode<float>\n");
+			TrieNode<float> t(34);
+			Assert::IsTrue(t.insert("hello", 24.f));
+			Assert::IsFalse(t.insert("he%%%llo", 21.f));
+			float v;
+			Assert::IsTrue(t.get("hello", v) && v == 24.f);
+			Assert::IsFalse(t.get("haa!e llo", v));
+			Assert::AreEqual(v, 24.f);
+			Assert::IsTrue(t.insert("hello", 22.f));
+			Assert::IsTrue(t.insert("world", 6.2f));
+			Assert::IsTrue(t.insert("food", 10.f));
+			Assert::IsTrue(t.insert("foo", 1.3f));
+			Assert::IsTrue(t.get("hello", v) && v == 22.f);
+			Assert::IsTrue(t.get("foo", v) && v == 1.3f);
+			Assert::IsTrue(t.get("food", v) && v == 10.f);
+			t.erase("hello");
+			t.erase("world");
+			Assert::IsFalse(t.get("hello", v));
+			Assert::IsFalse(t.get("world", v));
+			Logger::WriteMessage("TrieNode<float> tests passed");
+		}
+		TEST_METHOD(StringTrie)
+		{
+			Logger::WriteMessage("Test TrieNode<float>\n");
+			TrieNode<std::string> t;
+			Assert::IsTrue(t.insert("hello", "Value1"));
+			Assert::IsFalse(t.insert("he%%%llo", "test"));
+			std::string v;
+			Assert::IsTrue(t.get("hello", v) && v == "Value1");
+			Assert::IsFalse(t.get("haa!e llo", v));
+			Assert::AreEqual(v.c_str(), "Value1");
+			Assert::IsTrue(t.insert("hello", "world"));
+			Assert::IsTrue(t.insert("food", "yum"));
+			Assert::IsTrue(t.insert("foo", "bar"));
+			Assert::IsTrue(t.get("hello", v) && v == "world");
+			Assert::IsTrue(t.get("foo", v) && v == "bar");
+			Assert::IsTrue(t.get("food", v) && v == "yum");
+			t.erase("hello");
+			t.erase("world");
+			Assert::IsFalse(t.get("hello", v));
+			Assert::IsFalse(t.get("world", v));
+			Logger::WriteMessage("TrieNode<float> tests passed");
 		}
 	};
 }
