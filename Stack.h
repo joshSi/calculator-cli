@@ -29,10 +29,10 @@ private:
 	Node* m_top = nullptr;
 };
 
-template <class T>
+template <typename T>
 Stack<T>::Stack() {}
 
-template <class T>
+template <typename T>
 Stack<T>::Stack(const Stack<T>& s) {
 	Node* i = s.m_top;
 	if (i != nullptr) {
@@ -50,7 +50,7 @@ Stack<T>::Stack(const Stack<T>& s) {
 	}
 }
 
-template <class T>
+template <typename T>
 Stack<T>& Stack<T>::operator= (const Stack<T>& s) {
 	clear();
 	Node* i = s.m_top;
@@ -70,7 +70,7 @@ Stack<T>& Stack<T>::operator= (const Stack<T>& s) {
 	return *this;
 }
 
-template <class T>
+template <typename T>
 Stack<T>::~Stack() {
 	if (m_top != nullptr) {
 		while (m_top->prev != nullptr) {
@@ -81,7 +81,7 @@ Stack<T>::~Stack() {
 	}
 }
 
-template <class T>
+template <typename T>
 void Stack<T>::push(const T& elem) {
 	if (m_top == nullptr) {
 		m_top = new Node({ elem });
@@ -92,24 +92,24 @@ void Stack<T>::push(const T& elem) {
 	}
 }
 
-template <class T>
+template <typename T>
 T Stack<T>::top() {
 	return m_top->val;
 }
 
-template <class T>
+template <typename T>
 void Stack<T>::pop() {
 	Node* prevptr = m_top->prev;
 	delete m_top;
 	m_top = prevptr;
 }
 
-template <class T>
+template <typename T>
 bool Stack<T>::empty() {
 	return (m_top == nullptr);
 }
 
-template <class T>
+template <typename T>
 void Stack<T>::clear() {
 	if (m_top == nullptr)
 		return;

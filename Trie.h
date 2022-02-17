@@ -19,16 +19,16 @@ private:
 	short alpha_int(char a) const;
 };
 
-template<class T>
+template<typename T>
 TrieNode<T>::TrieNode() : t_val(nullptr), t_next() {
 }
 
-template<class T>
+template<typename T>
 TrieNode<T>::TrieNode(T val) : t_next() {
 	t_val = new T(val);
 }
 
-template<class T>
+template<typename T>
 TrieNode<T>::~TrieNode() {
 	delete t_val;
 	for (int i = 0; i < 26; i++) {
@@ -36,7 +36,7 @@ TrieNode<T>::~TrieNode() {
 	}
 }
 
-template<class T>
+template<typename T>
 bool TrieNode<T>::insert(const std::string& key, T val) {
 	if (key.empty()) {
 		if (t_val == nullptr) {
@@ -56,7 +56,7 @@ bool TrieNode<T>::insert(const std::string& key, T val) {
 	return t_next[idx]->insert(key.substr(1), val);
 }
 
-template<class T>
+template<typename T>
 bool TrieNode<T>::get(const std::string& key, T& val) const {
 	if (key.empty()) {
 		if (t_val) {
@@ -71,7 +71,7 @@ bool TrieNode<T>::get(const std::string& key, T& val) const {
 	return t_next[idx]->get(key.substr(1), val);
 }
 
-template<class T>
+template<typename T>
 void TrieNode<T>::erase(const std::string& key) {
 	if (key.empty()) {
 		delete t_val;
@@ -86,7 +86,7 @@ void TrieNode<T>::erase(const std::string& key) {
 	}
 }
 
-template<class T>
+template<typename T>
 short TrieNode<T>::alpha_int(char a) const {
 	switch (a) {
 	case 'a':
