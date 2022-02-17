@@ -9,4 +9,5 @@
 
 // add headers and implementations
 #include "../Stack.h"
+#include "../Trie.h"
 #endif //PCH_H
