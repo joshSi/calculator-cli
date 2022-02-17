@@ -147,7 +147,6 @@
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Stack.cpp" />
     <ClCompile Include="test.cpp" />
-    <ClCompile Include="Trie.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
