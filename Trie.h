@@ -11,7 +11,7 @@ public:
 	~TrieNode();
 	bool insert(const std::string& key, T val);
 	void erase(const std::string& key);
-	T get(const std::string& key) const;
+	bool get(const std::string& key, T& val) const;
 
 private:
 	T* t_val;
@@ -57,20 +57,26 @@ bool TrieNode<T>::insert(const std::string& key, T val) {
 }
 
 template<class T>
-T TrieNode<T>::get(const std::string& key) const {
-	if (key.empty())
-		return *t_val;
-	TrieNode* ptr = t_next[alpha_int(key[0])];
-	if (ptr)
-		return ptr->get(key.substr(1));
-	else
+bool TrieNode<T>::get(const std::string& key, T& val) const {
+	if (key.empty()) {
+		if (t_val) {
+			val = *t_val;
+			return true;
+		}
 		return false;
+	}
+	int idx = alpha_int(key[0]);
+	if (idx == -1 || t_next[idx] == nullptr)
+		return false;
+	return t_next[idx]->get(key.substr(1), val);
 }
 
 template<class T>
 void TrieNode<T>::erase(const std::string& key) {
-	if (key.empty())
+	if (key.empty()) {
 		delete t_val;
+		t_val = nullptr;
+	}
 	else {
 		if (alpha_int(key[0]) == -1)
 			return;

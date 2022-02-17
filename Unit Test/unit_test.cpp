@@ -10,7 +10,7 @@ namespace UnitTest
 	public:
 		TEST_METHOD(IntStack)
 		{
-			Logger::WriteMessage("Test Stack<int>");
+			Logger::WriteMessage("Test Stack<int>\n");
 			Stack<int> t_stack;
 			Assert::IsTrue(t_stack.empty());
 
@@ -49,7 +49,7 @@ namespace UnitTest
 
 		TEST_METHOD(StringStack)
 		{
-			Logger::WriteMessage("Test Stack<string>");
+			Logger::WriteMessage("Test Stack<string>\n");
 			Stack<std::string> t_stack;
 			Assert::IsTrue(t_stack.empty());
 
@@ -82,12 +82,24 @@ namespace UnitTest
 	public:
 		TEST_METHOD(FloatTrie)
 		{
-			Logger::WriteMessage("Test TrieNode<float>");
+			Logger::WriteMessage("Test TrieNode<float>\n");
 			TrieNode<float> t(34);
 			Assert::IsTrue(t.insert("hello", 24.f));
 			Assert::IsFalse(t.insert("he%%%llo", 21.f));
-			Assert::AreEqual(t.get("hello"), 24.f);
-			t.get("haa!e llo");
+			float v;
+			Assert::IsTrue(t.get("hello", v) && v == 24.f);
+			Assert::IsFalse(t.get("haa!e llo", v));
+			Assert::AreEqual(v, 24.f);
+			Assert::IsTrue(t.insert("hello", 22.f));
+			Assert::IsTrue(t.insert("world", 6.2f));
+			Assert::IsTrue(t.insert("food", 10.f));
+			Assert::IsTrue(t.insert("foo", 1.3f));
+			Assert::IsTrue(t.get("hello", v) && v == 22.f);
+			Assert::IsTrue(t.get("foo", v) && v == 1.3f);
+			Assert::IsTrue(t.get("food", v) && v == 10.f);
+			t.erase("hello");
+			Assert::IsFalse(t.get("hello", v));
+			Logger::WriteMessage("TrieNode<float> tests passed");
 		}
 	};
 }
