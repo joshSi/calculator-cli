@@ -98,7 +98,31 @@ namespace UnitTest
 			Assert::IsTrue(t.get("foo", v) && v == 1.3f);
 			Assert::IsTrue(t.get("food", v) && v == 10.f);
 			t.erase("hello");
+			t.erase("world");
 			Assert::IsFalse(t.get("hello", v));
+			Assert::IsFalse(t.get("world", v));
+			Logger::WriteMessage("TrieNode<float> tests passed");
+		}
+		TEST_METHOD(StringTrie)
+		{
+			Logger::WriteMessage("Test TrieNode<float>\n");
+			TrieNode<std::string> t;
+			Assert::IsTrue(t.insert("hello", "Value1"));
+			Assert::IsFalse(t.insert("he%%%llo", "test"));
+			std::string v;
+			Assert::IsTrue(t.get("hello", v) && v == "Value1");
+			Assert::IsFalse(t.get("haa!e llo", v));
+			Assert::AreEqual(v.c_str(), "Value1");
+			Assert::IsTrue(t.insert("hello", "world"));
+			Assert::IsTrue(t.insert("food", "yum"));
+			Assert::IsTrue(t.insert("foo", "bar"));
+			Assert::IsTrue(t.get("hello", v) && v == "world");
+			Assert::IsTrue(t.get("foo", v) && v == "bar");
+			Assert::IsTrue(t.get("food", v) && v == "yum");
+			t.erase("hello");
+			t.erase("world");
+			Assert::IsFalse(t.get("hello", v));
+			Assert::IsFalse(t.get("world", v));
 			Logger::WriteMessage("TrieNode<float> tests passed");
 		}
 	};
