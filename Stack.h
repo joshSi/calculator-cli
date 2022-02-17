@@ -33,10 +33,26 @@ template <class T>
 Stack<T>::Stack() {}
 
 template <class T>
-Stack<T>::Stack(const Stack<T>& s) {}
+Stack<T>::Stack(const Stack<T>& s) {
+	Node* i = s.m_top;
+	if (i != nullptr) {
+		m_top = new Node({ i->val, nullptr, nullptr });
+		i = i->prev;
+	}
+
+	Node* j = m_top;
+	Node* k;
+	while (i != nullptr) {
+		k = new Node({ i->val, nullptr, j });
+		j->prev = k;
+		i = i->prev;
+		j = k;
+	}
+}
 
 template <class T>
 Stack<T>& Stack<T>::operator= (const Stack<T>& s) {
+	clear();
 	Node* i = s.m_top;
 	if (i != nullptr) {
 		m_top = new Node({ i->val, nullptr, nullptr });
