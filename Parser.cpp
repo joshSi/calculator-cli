@@ -32,6 +32,8 @@ bool to_postfix(const std::string& infix, std::string& postfix) {
 				postfix += tolower(infix[i++]);
 			}
 			postfix += ' ';
+			if (v_op == false)
+				postfix += "* ";
 			i--;
 			v_op = false;
 			continue;
@@ -42,6 +44,8 @@ bool to_postfix(const std::string& infix, std::string& postfix) {
 				postfix += infix[i++];
 			}
 			postfix += ' ';
+			if (v_op == false)
+				postfix += "* ";
 			i--;
 			v_op = false;
 			continue;
