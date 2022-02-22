@@ -59,6 +59,7 @@ bool to_postfix(const std::string& infix, std::string& postfix) {
 				return false;
 			while (!operator_stack.empty() && operator_stack.top() != '(') {
 				postfix += operator_stack.top();
+				postfix += ' ';
 				operator_stack.pop();
 			}
 			if (operator_stack.empty())
@@ -77,6 +78,7 @@ bool to_postfix(const std::string& infix, std::string& postfix) {
 				if (cardinality(top) < cardinality(infix[i]))
 					break;
 				postfix += top;
+				postfix += ' ';
 				operator_stack.pop();
 			}
 			operator_stack.push(infix[i]);
@@ -88,6 +90,7 @@ bool to_postfix(const std::string& infix, std::string& postfix) {
 
 	while (!operator_stack.empty()) {
 		postfix += operator_stack.top();
+		postfix += ' ';
 		if (operator_stack.top() == '(')
 			return false;
 		operator_stack.pop();
