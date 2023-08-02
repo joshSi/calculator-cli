@@ -4,6 +4,8 @@
 
 int cardinality(const char& i) {
 	switch (i) {
+	case '^':
+		return 3;
 	case '*':
 	case '/':
 		return 2;
@@ -27,52 +29,64 @@ bool to_postfix(const std::string& infix, std::string& postfix) {
 	Stack<char> operator_stack;
 	for (int i = 0; i < infix.size(); i++) {
 		if (isalpha(infix[i])) {
-			v_op = false;
-			postfix += infix[i];
-		}
-		else if (isdigit(infix[i])) {
-			v_op = false;
-			postfix += infix[i];
-		}
-		else
-			switch (infix[i]) {
-			case ' ':
-				break;
-			case '(':
-				if (!v_op)
-					return false;
-				operator_stack.push('(');
-				break;
-			case ')':
-				if (v_op)
-					return false;
-				while (!operator_stack.empty() && operator_stack.top() != '(') {
-					postfix += operator_stack.top();
-					operator_stack.pop();
-				}
-				if (operator_stack.empty())
-					return false;
-				operator_stack.pop();
-				break;
-			case '+':
-			case '-':
-			case '/':
-			case '*':
-				if (v_op)
-					return false;
-				v_op = true;
-				while (!operator_stack.empty() && operator_stack.top() != '(') {
-					char top = operator_stack.top();
-					if (cardinality(top) < cardinality(infix[i]))
-						break;
-					postfix += top;
-					operator_stack.pop();
-				}
-				operator_stack.push(infix[i]);
-				break;
-			default:		// Other characters; return false
-				return false;
+			postfix += tolower(infix[i++]);
+			while (isalpha(infix[i])) {
+				postfix += tolower(infix[i++]);
 			}
+			postfix += ' ';
+			i--;
+			v_op = false;
+			continue;
+		}
+		if (isdigit(infix[i])) {
+			postfix += infix[i++];
+			while (isdigit(infix[i])) {
+				postfix += infix[i++];
+			}
+			postfix += ' ';
+			i--;
+			v_op = false;
+			continue;
+		}
+		switch (infix[i]) {
+		case ' ':
+			break;
+		case '(':
+			if (!v_op)
+				return false;
+			operator_stack.push('(');
+			break;
+		case ')':
+			if (v_op)
+				return false;
+			while (!operator_stack.empty() && operator_stack.top() != '(') {
+				postfix += operator_stack.top();
+				operator_stack.pop();
+			}
+			if (operator_stack.empty())
+				return false;
+			operator_stack.pop();
+			break;
+		case '+':
+		case '-':
+		case '/':
+		case '*':
+		case '^':
+			if (v_op)
+				return false;
+			v_op = true;
+			while (!operator_stack.empty() && operator_stack.top() != '(') {
+				char top = operator_stack.top();
+				if (cardinality(top) < cardinality(infix[i]))
+					break;
+				postfix += top;
+				operator_stack.pop();
+			}
+			operator_stack.push(infix[i]);
+			break;
+		default:		// Other characters; return false
+			return false;
+		}
 	}
 
 	while (!operator_stack.empty()) {
