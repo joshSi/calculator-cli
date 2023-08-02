@@ -4,6 +4,8 @@
 
 int cardinality(const char& i) {
 	switch (i) {
+	case '^':
+		return 3;
 	case '*':
 	case '/':
 		return 2;
@@ -69,6 +71,7 @@ bool to_postfix(const std::string& infix, std::string& postfix) {
 		case '-':
 		case '/':
 		case '*':
+		case '^':
 			if (v_op)
 				return false;
 			v_op = true;
